@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>41. Movie Search</title>
+  <style>
+    body { font-family: Arial; background: #141414; color: white; margin: 0; padding: 20px; }
+    .search { width: 100%; max-width: 600px; margin: 30px auto; padding: 15px; font-size: 18px; display: block; border-radius: 50px; border: none; }
+    .movies { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; max-width: 1200px; margin: auto; }
+    .movie { background: #222; border-radius: 12px; overflow: hidden; transition: 0.3s; }
+    .movie:hover { transform: scale(1.05); }
+    .movie img { width: 100%; height: 320px; object-fit: cover; }
+    .info { padding: 15px; }
+    .info h3 { margin: 0 0 8px 0; }
+  </style>
+</head>
+<body>
+  <h1 style="text-align:center;">Kinolar Qidiruvchisi</h1>
+  <input type="text" id="search" class="search" placeholder="Kino nomini yozing..." onkeyup="searchMovies()">
+
+  <div class="movies" id="movies"></div>
+
+  <script>
+    const movies = [
+      {title: "Oppenheimer", year: 2023, img: "https://picsum.photos/id/1015/300/400"},
+      {title: "Dune: Part Two", year: 2024, img: "https://picsum.photos/id/201/300/400"},
+      {title: "The Batman", year: 2022, img: "https://picsum.photos/id/237/300/400"},
+      {title: "Interstellar", year: 2014, img: "https://picsum.photos/id/870/300/400"},
+      {title: "Inception", year: 2010, img: "https://picsum.photos/id/133/300/400"},
+      {title: "Avatar", year: 2009, img: "https://picsum.photos/id/669/300/400"}
+    ];
+
+    function renderMovies(filtered) {
+      const container = document.getElementById('movies');
+      container.innerHTML = '';
+      filtered.forEach(movie => {
+        const div = document.createElement('div');
+        div.className = 'movie';
+        div.innerHTML = `
+          <img src="${movie.img}" alt="${movie.title}">
+          <div class="info">
+            <h3>${movie.title}</h3>
+            <p>${movie.year}</p>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function searchMovies() {
+      const term = document.getElementById('search').value.toLowerCase();
+      const filtered = movies.filter(m => m.title.toLowerCase().includes(term));
+      renderMovies(filtered.length ? filtered : movies);
+    }
+
+    renderMovies(movies);
+  </script>
+</body>
+</html>
